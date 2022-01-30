@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     private Camera _mainCamera;
 
     public int Money => _money;
-
     public float Energy => _energy;
     public float Hunger => _hunger;
     public float Leisure => _leisure;
@@ -38,7 +37,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        _mainCamera = Camera.main;        
+        _mainCamera = Camera.main;
     }
 
     private void Update()

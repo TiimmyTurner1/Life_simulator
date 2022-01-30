@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class PlayerMover : MonoBehaviour
 {
     private Camera _mainCamera;
+    
     private NavMeshAgent _myMeshAgent;
     private Animator _animator;    
 

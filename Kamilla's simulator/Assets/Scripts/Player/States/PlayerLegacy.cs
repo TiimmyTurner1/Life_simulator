@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerLegacy : MonoBehaviour
 {
-    public float Energy = 1f;
+    /*public float Energy = 1f;
     public float Eat = 1f;
     public LayerMask whatCanBeClickOn;
 
@@ -79,6 +79,6 @@ public class PlayerLegacy : MonoBehaviour
         {            
             SetState(SleepState);            
         }
-    }
+    }*/
 }
 
