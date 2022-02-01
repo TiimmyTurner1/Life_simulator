@@ -12,15 +12,19 @@ public class Player : MonoBehaviour
     [SerializeField] private float _energy;
     [SerializeField] private float _hunger;
     [SerializeField] private float _leisure;
+    [SerializeField] private float _hygiene;
 
     [SerializeField] private float _hungerLifeTime;
     [SerializeField] private float _energyLifeTime;
     [SerializeField] private float _leisureLifeTime;
+    [SerializeField] private float _hygieneLifeTime;
 
     [SerializeField] private LayerMask _whatCanBeClickOn;
 
     [SerializeField] private State _sleepState;
     [SerializeField] private State _eatState;
+    [SerializeField] private State _watchTVState;
+    [SerializeField] private State _showerState;
     [SerializeField] private State _emptyState;
     [SerializeField] private State _currentState;
 
@@ -30,8 +34,11 @@ public class Player : MonoBehaviour
     public float Energy => _energy;
     public float Hunger => _hunger;
     public float Leisure => _leisure;
+    public float Hygiene => _hygiene;
 
     public State SleepState => _sleepState;
+    public State WatchTVState => _watchTVState;
+    public State ShowerState => _showerState;
 
     public event UnityAction<int> MoneyChanged;
 
@@ -62,6 +69,14 @@ public class Player : MonoBehaviour
             {
                 refrigerator.ActivateZone();
             }
+            else if (Input.GetMouseButtonDown(0) && hit.collider.gameObject.TryGetComponent(out Sofa sofa))
+            {
+                sofa.ActivateZone();
+            }
+            else if (Input.GetMouseButtonDown(0) && hit.collider.gameObject.TryGetComponent(out Shower shower))
+            {
+                shower.ActivateZone();
+            }
             else if (Input.GetMouseButtonDown(0))
             {
                 SetState(_emptyState);
@@ -82,6 +97,7 @@ public class Player : MonoBehaviour
         _hunger -= Time.deltaTime / _hungerLifeTime;
         _energy -= Time.deltaTime / _energyLifeTime;
         _leisure -= Time.deltaTime / _leisureLifeTime;
+        _hygiene -= Time.deltaTime / _hygieneLifeTime;
     }
 
     private void DeactivateAllActiveZones()
@@ -94,9 +110,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void AddEnergyValue(float value)
+    public void AddValue(float value, ValueType valueType)
     {
-        _energy += value;
+        switch (valueType)
+        {
+            case ValueType.Energy:
+                _energy += value;
+                break;
+            case  ValueType.Leisure:
+                _leisure += value;
+                break;
+            case ValueType.Hygiene:
+                _hygiene += value;
+                break;
+            default:
+                break;
+        }
     }
 
     public void AddMoney(int money)
@@ -109,5 +138,12 @@ public class Player : MonoBehaviour
     {
         _money -= item.Price;        
         MoneyChanged?.Invoke(Money);
+    }
+    
+    public enum ValueType
+    {
+        Energy,
+        Leisure,
+        Hygiene
     }
 }

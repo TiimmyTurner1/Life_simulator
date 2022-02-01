@@ -7,6 +7,7 @@ using UnityEngine;
 public class SleepState : State
 {
     private Bed _bed;
+    private BedParticle _particleBed;
     private Vector3 _targetSleepPosition;
     private Vector3 _lastPlayerPosition;
 
@@ -17,6 +18,8 @@ public class SleepState : State
     public override void Init()
     {
         _bed = FindObjectOfType<Bed>();
+        _particleBed = FindObjectOfType<BedParticle>();
+        _particleBed.GetComponent<ParticleSystem>().Play(true);
         _lastPlayerPosition = Player.gameObject.transform.position;
         _targetSleepPosition = FindObjectOfType<SleepPoint>().transform.position;
         _isSleeping = false;
@@ -40,28 +43,23 @@ public class SleepState : State
 
     }
 
-    void StartSleep()
-    {        
-        //анимация лечь в кровать
+    private void StartSleep()
+    {  
         _isSleeping = true;        
     }
 
-    void DoSleep()
+    private void DoSleep()
     {
         Player.transform.rotation = Quaternion.Euler(-90, -90, 180);
         Player.transform.position = _targetSleepPosition;
         _sleepTimeLeft -= Time.deltaTime;
-        Player.AddEnergyValue(_sleepBarAdding);
+        Player.AddValue(_sleepBarAdding, Player.ValueType.Energy);
 
-        if (_sleepTimeLeft > 0 && Player.Energy < 1)
+        if (_sleepTimeLeft <= 0 || Player.Energy >= 1)
         {
-            return;
-        }    
-        else 
-        {
-            //анимация встать с кровати
             Player.transform.position = _lastPlayerPosition;
             IsFinished = true;
+            _particleBed.GetComponent<ParticleSystem>().Stop();
             _bed.DeactivateZone();
         }        
     }
