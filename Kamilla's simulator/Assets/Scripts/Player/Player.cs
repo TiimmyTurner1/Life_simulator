@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask _whatCanBeClickOn;
 
     [SerializeField] private State _sleepState;
-    [SerializeField] private State _eatState;
     [SerializeField] private State _watchTVState;
     [SerializeField] private State _showerState;
     [SerializeField] private State _emptyState;
@@ -117,13 +116,22 @@ public class Player : MonoBehaviour
             case ValueType.Energy:
                 _energy += value;
                 break;
+            
+            case ValueType.Hunger:
+                float hungerValue = value / 100;
+                
+                if (_hunger + hungerValue > 1)
+                    _hunger = 1;
+                else
+                    _hunger += value/100;
+                break;
+            
             case  ValueType.Leisure:
                 _leisure += value;
                 break;
+            
             case ValueType.Hygiene:
                 _hygiene += value;
-                break;
-            default:
                 break;
         }
     }
@@ -144,6 +152,7 @@ public class Player : MonoBehaviour
     {
         Energy,
         Leisure,
-        Hygiene
+        Hygiene,
+        Hunger
     }
 }

@@ -9,18 +9,20 @@ public class PlayerMover : MonoBehaviour
     private Camera _mainCamera;
     
     private NavMeshAgent _myMeshAgent;
-    private Animator _animator;    
+    private Animator _animator;
+    private bool _isFixed;
 
     private void Start()
     {
         _mainCamera = Camera.main;
         _myMeshAgent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();        
+        _animator = GetComponent<Animator>();
+        _isFixed = false;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && _isFixed == false)
         {
             RaycastHit hit;
 
@@ -32,5 +34,15 @@ public class PlayerMover : MonoBehaviour
 
         float speed = _myMeshAgent.velocity.magnitude;
         _animator.SetFloat("Speed", speed);
+    }
+
+    public void MakeAgentFixed()
+    {
+        _isFixed = true;
+    }
+    
+    public void MakeAgentMovable()
+    {
+        _isFixed = false;
     }
 }

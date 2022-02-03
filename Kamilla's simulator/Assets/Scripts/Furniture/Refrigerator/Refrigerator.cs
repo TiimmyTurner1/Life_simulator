@@ -6,6 +6,7 @@ public class Refrigerator : MonoBehaviour
 {
     [SerializeField] private GameObject _openFridgeZone;
     [SerializeField] private Animator _animator;
+    [SerializeField] private Shop _shop;
 
     public void ActivateZone()
     {
@@ -20,6 +21,7 @@ public class Refrigerator : MonoBehaviour
     public void OpenFridge()
     {
         _animator.Play("FridgeOpen");
+        _shop.OpenShop();
     }
 
     public void CloseFridge()

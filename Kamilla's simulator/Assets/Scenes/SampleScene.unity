@@ -1237,7 +1237,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1740,7 +1740,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &649396809
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1835,6 +1835,7 @@ MonoBehaviour:
   - {fileID: 5005681649966310013, guid: e0628f32881d3aa4c8f0c3015bf5afd4, type: 3}
   - {fileID: 7036578526835294027, guid: 08a2628aa27805d4aa593718585bba9a, type: 3}
   _player: {fileID: 1724441878980217513}
+  _playerMover: {fileID: 6696578895017588860}
   _itemTemplate: {fileID: 5435364388866425108, guid: 02201b3b5015825458fa14f534ded19a, type: 3}
   _itemContainer: {fileID: 1439788821}
 --- !u!1 &666272286
@@ -2908,7 +2909,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.00061035156, y: 0}
   m_SizeDelta: {x: 0.41, y: -0.84000105}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3803,7 +3804,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.038000003}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -957.0428, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1439788823
 MonoBehaviour:
@@ -4641,7 +4642,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4968,7 +4969,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1817480625}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 649396812}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: OnExitButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1817480625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12220,6 +12233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _openFridgeZone: {fileID: 1174140619}
   _animator: {fileID: 1868006162880888}
+  _shop: {fileID: 649396812}
 --- !u!1 &1366718645040535
 GameObject:
   m_ObjectHideFlags: 0
@@ -40687,7 +40701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce61cf050671864998c043bf1704a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _money: 0
+  _money: 100
   _energy: 1
   _hunger: 1
   _leisure: 1
@@ -40700,7 +40714,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   _sleepState: {fileID: 11400000, guid: 4ff62b639508d894d813a879a797412d, type: 2}
-  _eatState: {fileID: 0}
   _watchTVState: {fileID: 11400000, guid: 4c5307f4cfd622e49a4f6e4cbdf086c2, type: 2}
   _showerState: {fileID: 11400000, guid: f8becccc454d562438620b42436fb112, type: 2}
   _emptyState: {fileID: 11400000, guid: a9921e8f6b63a4349a27c1521123b3bc, type: 2}

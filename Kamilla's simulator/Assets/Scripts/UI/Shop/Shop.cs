@@ -6,6 +6,7 @@ public class Shop : MonoBehaviour
 {
     [SerializeField] private List<FoodItem> _items;
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerMover _playerMover;
     [SerializeField] private ItemView _itemTemplate;
     [SerializeField] private GameObject _itemContainer;
 
@@ -24,8 +25,24 @@ public class Shop : MonoBehaviour
         view.Render(item);
     }
 
-    private void OnBuyButtonClick(FoodItem item, ItemView view)
+    public void OnBuyButtonClick(FoodItem item, ItemView view)
     {
+        if (_player.Money >= item.Price)
+        {
+            _player.BuyFood(item);
+            _player.AddValue(item.EnergyValue, Player.ValueType.Hunger);
+        }
+    }
 
+    public void OnExitButtonClick()
+    {
+        gameObject.SetActive(false);
+        _playerMover.MakeAgentMovable();
+    }
+
+    public void OpenShop()
+    {
+        gameObject.SetActive(true);
+        _playerMover.MakeAgentFixed();
     }
 }
