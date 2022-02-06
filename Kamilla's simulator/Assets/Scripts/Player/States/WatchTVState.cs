@@ -51,11 +51,7 @@ public class WatchTVState : State
         _watchTimeLeft -= Time.deltaTime;
         Player.AddValue(_leisureBarAdding, Player.ValueType.Leisure);
 
-        if (_watchTimeLeft > 0 && Player.Leisure < 1)
-        {
-            return;
-        }    
-        else 
+        if (_watchTimeLeft <= 0 || Player.Leisure >= 1)
         {
             Player.transform.position = _lastPlayerPosition;
             IsFinished = true;

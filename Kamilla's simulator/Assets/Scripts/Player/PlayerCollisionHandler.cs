@@ -20,10 +20,9 @@ public class PlayerCollisionHandler : MonoBehaviour
             _player.SetState(_player.SleepState);
         }
 
-        if (other.TryGetComponent(out OpenFridgeZone openFridgeZone))
+        if(other.TryGetComponent(out OpenFridgeZone openFridgeZone))
         {
             _refrigerator.OpenFridge();
-            //меню холодильника
         }
         
         if(other.TryGetComponent(out GoWatchTVZone goWatchTVZone))
@@ -34,6 +33,11 @@ public class PlayerCollisionHandler : MonoBehaviour
         if(other.TryGetComponent(out GoShowerZone goShowerZone))
         {            
             _player.SetState(_player.ShowerState);
+        }
+        
+        if(other.TryGetComponent(out GoPcZone goPcZone))
+        {            
+            _player.SetState(_player.WorkPcState);
         }
     }
 

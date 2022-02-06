@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private State _sleepState;
     [SerializeField] private State _watchTVState;
+    [SerializeField] private State _workPCState;
     [SerializeField] private State _showerState;
     [SerializeField] private State _emptyState;
     [SerializeField] private State _currentState;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
 
     public State SleepState => _sleepState;
     public State WatchTVState => _watchTVState;
+    public State WorkPcState => _workPCState;
     public State ShowerState => _showerState;
 
     public event UnityAction<int> MoneyChanged;
@@ -71,6 +73,10 @@ public class Player : MonoBehaviour
             else if (Input.GetMouseButtonDown(0) && hit.collider.gameObject.TryGetComponent(out Sofa sofa))
             {
                 sofa.ActivateZone();
+            }
+            else if (Input.GetMouseButtonDown(0) && hit.collider.gameObject.TryGetComponent(out Computer computer))
+            {
+                computer.ActivateZone();
             }
             else if (Input.GetMouseButtonDown(0) && hit.collider.gameObject.TryGetComponent(out Shower shower))
             {
