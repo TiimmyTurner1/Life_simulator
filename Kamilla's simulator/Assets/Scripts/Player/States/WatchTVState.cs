@@ -9,6 +9,8 @@ public class WatchTVState : State
     private Vector3 _targetWatchTVPosition;
     private Vector3 _lastPlayerPosition;
 
+    private Animator _animator;
+    private PlayerMover _playerMover;
     private bool _isWatching;
     private float _watchTimeLeft = 20f;
     private float _leisureBarAdding = 0.00016f;
@@ -16,6 +18,8 @@ public class WatchTVState : State
     public override void Init()
     {
         _sofa = FindObjectOfType<Sofa>();
+        _animator = Player.GetComponent<Animator>();
+        _playerMover = FindObjectOfType<PlayerMover>();
         _lastPlayerPosition = Player.gameObject.transform.position;
         _targetWatchTVPosition = FindObjectOfType<WatchTVPoint>().transform.position;
         _isWatching = false;
@@ -41,12 +45,14 @@ public class WatchTVState : State
 
     private void StartWatchTV()
     {  
-        _isWatching = true;        
+        _animator.SetBool("isSitting", true);
+        _playerMover.IsMovable = false;
+        _isWatching = true;
     }
 
     private void DoWatchTV()
     {
-        Player.transform.rotation = Quaternion.Euler(-90, -90, 180);
+        Player.transform.rotation = Quaternion.Euler(0, -90, 0);
         Player.transform.position = _targetWatchTVPosition;
         _watchTimeLeft -= Time.deltaTime;
         Player.AddValue(_leisureBarAdding, Player.ValueType.Leisure);
@@ -55,7 +61,9 @@ public class WatchTVState : State
         {
             Player.transform.position = _lastPlayerPosition;
             IsFinished = true;
+            _animator.SetBool("isSitting", false);
             _sofa.DeactivateZone();
+            _playerMover.IsMovable = true;
         }        
     }
 }

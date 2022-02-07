@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class SleepState : State
 {
+    private PlayerMover _playerMover;
     private Bed _bed;
     private BedParticle _particleBed;
     private Vector3 _targetSleepPosition;
     private Vector3 _lastPlayerPosition;
-
+    
     private bool _isSleeping;
     private float _sleepTimeLeft = 20f;
     private float _sleepBarAdding = 0.00008f;
@@ -18,6 +19,7 @@ public class SleepState : State
     public override void Init()
     {
         _bed = FindObjectOfType<Bed>();
+        _playerMover = FindObjectOfType<PlayerMover>();
         _particleBed = FindObjectOfType<BedParticle>();
         _particleBed.GetComponent<ParticleSystem>().Play(true);
         _lastPlayerPosition = Player.gameObject.transform.position;
@@ -45,12 +47,13 @@ public class SleepState : State
 
     private void StartSleep()
     {  
-        _isSleeping = true;        
+        _isSleeping = true;
+        _playerMover.IsMovable = false;
     }
 
     private void DoSleep()
-    {
-        Player.transform.rotation = Quaternion.Euler(-90, -90, 180);
+    {        
+        Player.transform.rotation = Quaternion.Euler(-90, 0, 180);
         Player.transform.position = _targetSleepPosition;
         _sleepTimeLeft -= Time.deltaTime;
         Player.AddValue(_sleepBarAdding, Player.ValueType.Energy);
@@ -61,6 +64,7 @@ public class SleepState : State
             IsFinished = true;
             _particleBed.GetComponent<ParticleSystem>().Stop();
             _bed.DeactivateZone();
+            _playerMover.IsMovable = true;
         }        
     }
 }

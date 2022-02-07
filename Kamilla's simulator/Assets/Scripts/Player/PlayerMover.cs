@@ -11,6 +11,8 @@ public class PlayerMover : MonoBehaviour
     private NavMeshAgent _myMeshAgent;
     private Animator _animator;
     private bool _isFixed;
+    
+    public bool IsMovable { get; set; }
 
     private void Start()
     {
@@ -18,6 +20,7 @@ public class PlayerMover : MonoBehaviour
         _myMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _isFixed = false;
+        IsMovable = true;
     }
 
     private void Update()
@@ -32,8 +35,16 @@ public class PlayerMover : MonoBehaviour
             }            
         }
 
-        float speed = _myMeshAgent.velocity.magnitude;
-        _animator.SetFloat("Speed", speed);
+        if (IsMovable == false)
+        {
+            _animator.SetFloat("Speed", 0);
+
+        }
+        else
+        {
+            float speed = _myMeshAgent.velocity.magnitude;
+            _animator.SetFloat("Speed", speed);
+        }
     }
 
     public void MakeAgentFixed()

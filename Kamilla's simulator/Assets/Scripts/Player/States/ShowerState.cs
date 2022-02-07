@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShowerState : State
 
 {
+    private PlayerMover _playerMover;
     private Shower _shower;
     private ShowerParticle _particleShower;
     private Vector3 _targetShowerPosition;
@@ -17,6 +18,7 @@ public class ShowerState : State
 
     public override void Init()
     {
+        _playerMover = FindObjectOfType<PlayerMover>();
         _shower = FindObjectOfType<Shower>();
         _particleShower = FindObjectOfType<ShowerParticle>();
         _particleShower.GetComponent<ParticleSystem>().Play(true);
@@ -45,12 +47,12 @@ public class ShowerState : State
 
     private void StartShower()
     {  
-        _isWashing = true;        
+        _isWashing = true;
+        _playerMover.IsMovable = false;
     }
 
     private void DoShower()
     {
-        Player.transform.rotation = Quaternion.Euler(-90, -90, 180);
         Player.transform.position = _targetShowerPosition;
         _showerTimeLeft -= Time.deltaTime;
         Player.AddValue(_hygieneBarAdding, Player.ValueType.Hygiene);
@@ -61,6 +63,7 @@ public class ShowerState : State
             IsFinished = true;
             _particleShower.GetComponent<ParticleSystem>().Stop(true);
             _shower.DeactivateZone();
-        }        
+            _playerMover.IsMovable = true;
+        }
     }
 }
