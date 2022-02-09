@@ -1,2 +1,2 @@
-# Kamilla_simulator
+# Life_simulator
  
